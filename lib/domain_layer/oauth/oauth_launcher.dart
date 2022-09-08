@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:lyrics_on_go/model/auth_model.dart';
+import 'package:lyrics_on_go/domain_layer/oauth/auth_model.dart';
 import 'package:oauth2/oauth2.dart';
 
 class OAuthLauncher {

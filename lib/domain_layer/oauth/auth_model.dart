@@ -1,4 +1,4 @@
-import 'package:lyrics_on_go/utils/type_def.dart';
+import 'package:lyrics_on_go/view_layer/utils/type_def.dart';
 
 class AuthModel {
   AuthModel(this.accessToken, this.refreshToken);

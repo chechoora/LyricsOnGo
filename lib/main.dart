@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:lyrics_on_go/determine/determine_page.dart';
+import 'package:lyrics_on_go/di/di.dart';
+import 'package:lyrics_on_go/view_layer/routes/routes_const.dart';
+import 'package:lyrics_on_go/view_layer/routes/routes_generator.dart';
+import 'package:loggy/loggy.dart';
 
 void main() {
+  Loggy.initLoggy(
+    logPrinter: const PrettyPrinter(),
+  );
+  setupDI();
   runApp(const MyApp());
 }
 
@@ -13,7 +20,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const DeterminePage(),
+      initialRoute: RoutesConst.determine,
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }

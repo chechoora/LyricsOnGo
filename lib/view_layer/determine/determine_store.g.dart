@@ -41,6 +41,14 @@ mixin _$DetermineStore on _DetermineStore, Store {
     });
   }
 
+  late final _$checkCredentialsAsyncAction =
+      AsyncAction('_DetermineStore.checkCredentials', context: context);
+
+  @override
+  Future<void> checkCredentials() {
+    return _$checkCredentialsAsyncAction.run(() => super.checkCredentials());
+  }
+
   late final _$_DetermineStoreActionController =
       ActionController(name: '_DetermineStore', context: context);
 

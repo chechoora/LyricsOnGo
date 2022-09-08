@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lyrics_on_go/determine/determine_store.dart';
 import 'package:lyrics_on_go/di/di.dart';
-import 'package:lyrics_on_go/oauth/oauth_launcher.dart';
-import 'package:lyrics_on_go/repository/auth_reposiory.dart';
-import 'package:lyrics_on_go/utils/widgets/simple_loading_widget.dart';
+import 'package:lyrics_on_go/domain_layer/oauth/oauth_launcher.dart';
+import 'package:lyrics_on_go/domain_layer/repository/auth_reposiory.dart';
+import 'package:lyrics_on_go/view_layer/determine/determine_store.dart';
+import 'package:lyrics_on_go/view_layer/routes/routes_const.dart';
+import 'package:lyrics_on_go/view_layer/utils/widgets/simple_loading_widget.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:loggy/loggy.dart';
 
 class DeterminePage extends StatefulWidget {
   const DeterminePage({Key? key}) : super(key: key);
@@ -21,11 +23,23 @@ class _DeterminePageState extends State<DeterminePage> {
 
   @override
   void initState() {
-    reactionDisposer = reaction((_) => determineStore.isCredentialsReady, (bool isCredentialsReady) {});
     oauthLauncher = OAuthLauncher(onCredentialsObtained: (credentials) {
       determineStore.setCredentials(credentials);
     });
     determineStore = DetermineStore(getIt<AuthRepository>(), oauthLauncher);
+    reactionDisposer = reaction(
+      (_) => determineStore.isCredentialsReady,
+      (bool isCredentialsReady) {
+        logDebug('isCredentialsReady: $isCredentialsReady');
+        if (isCredentialsReady) {
+          Navigator.of(context).pushReplacementNamed(RoutesConst.main);
+        }
+      },
+      onError: (_, __) {
+        logError('$_');
+        logError('$__');
+      },
+    );
     determineStore.checkCredentials();
     super.initState();
   }
@@ -39,13 +53,11 @@ class _DeterminePageState extends State<DeterminePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Test Appbar'),
-      ),
+      appBar: AppBar(title: const Text('Login')),
       body: Column(
         children: [
           Observer(
-            builder: (BuildContext context) {
+            builder: (context) {
               if (determineStore.loading) {
                 return const Center(
                   child: SimpleLoadingWidget(),

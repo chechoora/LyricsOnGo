@@ -1,5 +1,5 @@
-import 'package:lyrics_on_go/model/auth_model.dart';
-import 'package:lyrics_on_go/repository/pref_repository.dart';
+import 'package:lyrics_on_go/domain_layer/oauth/auth_model.dart';
+import 'package:lyrics_on_go/domain_layer/repository/pref_repository.dart';
 
 class AuthRepository {
   AuthRepository(this.prefRepository);

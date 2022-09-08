@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:lyrics_on_go/utils/type_def.dart';
+import 'package:lyrics_on_go/view_layer/utils/type_def.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PrefRepository {

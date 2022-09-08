@@ -16,6 +16,25 @@ class AlbumSourceApi extends IsolateSource {
   final AlbumTrackServiceApi albumTrackApi;
 
   Future<AlbumModelApi> getAlbum(int albumId) async {
+    return await executeInIsolate(GetAlbumsOperation(albumApi, albumMapperApi, albumTrackApi, albumId));
+  }
+}
+
+class GetAlbumsOperation implements IsolateOperation<AlbumModelApi> {
+  final AlbumServiceApi albumApi;
+  final AlbumMapperApi albumMapperApi;
+  final AlbumTrackServiceApi albumTrackApi;
+  final int albumId;
+
+  GetAlbumsOperation(
+    this.albumApi,
+    this.albumMapperApi,
+    this.albumTrackApi,
+    this.albumId,
+  );
+
+  @override
+  Future<AlbumModelApi> execute() async {
     final albumApiResponse = await albumApi.getAlbumInfo(albumId);
     final albumTrackApiResponse = await albumTrackApi.getTracks(albumId);
     return albumMapperApi.mapToAlbumInfo(albumApiResponse, albumTrackApiResponse);

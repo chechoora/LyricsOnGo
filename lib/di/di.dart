@@ -7,6 +7,7 @@ import 'package:lyrics_on_go/data_layer/api/album/serivce/album_track_service_ap
 import 'package:lyrics_on_go/data_layer/api/search/search_mapper_api.dart';
 import 'package:lyrics_on_go/data_layer/api/search/search_service_api.dart';
 import 'package:lyrics_on_go/data_layer/api/search/search_source_api.dart';
+import 'package:lyrics_on_go/data_layer/cache/album/album_source_cache.dart';
 import 'package:lyrics_on_go/domain_layer/album/album_mapper.dart';
 import 'package:lyrics_on_go/domain_layer/album/album_reposiotry.dart';
 import 'package:lyrics_on_go/domain_layer/repository/auth_reposiory.dart';
@@ -72,6 +73,7 @@ void _setupRepos() {
   final SearchRepository infoRepository = SearchRepository(getIt.get<SearchSourceApi>(), SearchMapper());
   getIt.registerSingleton<SearchRepository>(infoRepository);
 
-  final AlbumRepository albumRepository = AlbumRepository(getIt.get<AlbumSourceApi>(), AlbumMapper());
+  final AlbumRepository albumRepository =
+      AlbumRepository(getIt.get<AlbumSourceApi>(), AlbumSourceCache(), AlbumMapper());
   getIt.registerSingleton<AlbumRepository>(albumRepository);
 }

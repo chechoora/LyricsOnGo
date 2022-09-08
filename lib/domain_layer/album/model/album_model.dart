@@ -1,4 +1,3 @@
-// This file is "main.dart"
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:lyrics_on_go/domain_layer/album/model/album_track.dart';
 
